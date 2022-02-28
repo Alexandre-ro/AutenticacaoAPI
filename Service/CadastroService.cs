@@ -21,7 +21,7 @@ namespace UsuarioAPI.Service
         public Result Cadastrar(CreateUsuarioDTO dto)
         {
             Usuario usuario = _mapper.Map<Usuario>(dto);
-           
+
             IdentityUser<int> usuarioIdentity = _mapper.Map<IdentityUser<int>>(usuario);
 
             Task<IdentityResult> resultadoIdentity = _userManager.CreateAsync(usuarioIdentity, dto.Password);

@@ -1,3 +1,5 @@
+Dependências Necessárias para o Projeto.
+
 Microsoft.AspNetCore.Identity na versão 2.2.0
 Microsoft.AspNetCore.Identity.EntityFrameworkCore na versão 5.0.5
 Microsoft.EntityFrameworkCore na versão 5.0.5
