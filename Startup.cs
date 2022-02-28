@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using UsuarioAPI.Data;
+using UsuarioAPI.Service;
 
 namespace UsuarioAPI
 {
@@ -28,6 +29,9 @@ namespace UsuarioAPI
 
             services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
                     .AddEntityFrameworkStores<UserDbContext>();
+
+            services.AddScoped<CadastroService, CadastroService>();
+
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -38,9 +42,7 @@ namespace UsuarioAPI
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UsuarioAPI v1"));
+                app.UseDeveloperExceptionPage();                
             }
 
             app.UseHttpsRedirection();
