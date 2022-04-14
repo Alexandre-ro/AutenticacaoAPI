@@ -30,7 +30,9 @@ namespace UsuarioAPI
             services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
                     .AddEntityFrameworkStores<UserDbContext>();
 
-            services.AddScoped<CadastroService, CadastroService>();
+            services.AddScoped<UsuarioService, UsuarioService>();
+            services.AddScoped<LoginService, LoginService>();
+
 
             services.AddControllers();
 

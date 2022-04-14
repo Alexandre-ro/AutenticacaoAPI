@@ -7,17 +7,17 @@ namespace UsuarioAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CadastroController : ControllerBase
+    public class UsuarioController : ControllerBase
     {
-        private CadastroService _service;
+        private UsuarioService _service;
 
-        public CadastroController(CadastroService service)
+        public UsuarioController(UsuarioService service)
         {
             _service = service;
         }
 
         [HttpPost]
-        public IActionResult Cadastra([FromBody] CreateUsuarioDTO dto)
+        public IActionResult Cadastrar([FromBody] CreateUsuarioDTO dto)
         {
             Result resultado = _service.Cadastrar(dto);
 
