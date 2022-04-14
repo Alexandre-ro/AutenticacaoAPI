@@ -26,7 +26,11 @@ namespace UsuarioAPI.Service
 
             if (resultadoIdentity.Result.Succeeded)
             {
-                return Result.Ok();
+                var codigoAtivacao = _userManager
+                                      .GenerateEmailConfirmationTokenAsync(usuarioIdentity);
+
+
+                return Result.Ok().WithSuccess(codigoAtivacao.Result);
             }
 
             return Result.Fail("Ocorreu uma falha ao cadastrar o usuário");

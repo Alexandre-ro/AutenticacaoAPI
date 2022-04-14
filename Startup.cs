@@ -27,8 +27,10 @@ namespace UsuarioAPI
                 options.UseMySQL(Configuration.GetConnectionString("UsuarioConnection"))
             );
 
-            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
-                    .AddEntityFrameworkStores<UserDbContext>();
+            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(
+                   opt => opt.SignIn.RequireConfirmedEmail = true
+                ).AddEntityFrameworkStores<UserDbContext>()
+                 .AddDefaultTokenProviders();
 
             //Adicionado os scopos
             services.AddScoped<UsuarioService, UsuarioService>();
