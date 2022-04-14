@@ -10,7 +10,6 @@ namespace UsuarioAPI.Controllers
     public class LoginController : ControllerBase
     {
         private LoginService _service;
-
         public LoginController(LoginService service)
         {
             _service = service;
@@ -23,10 +22,10 @@ namespace UsuarioAPI.Controllers
 
             if (result.IsFailed) 
             {
-                return Unauthorized();            
+                return Unauthorized(result.Errors[0]);            
             }
 
-            return Ok();
+            return Ok(result.Successes[0]);
         }
     }
 }

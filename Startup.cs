@@ -30,9 +30,10 @@ namespace UsuarioAPI
             services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
                     .AddEntityFrameworkStores<UserDbContext>();
 
+            //Adicionado os scopos
             services.AddScoped<UsuarioService, UsuarioService>();
             services.AddScoped<LoginService, LoginService>();
-
+            services.AddScoped<TokenService, TokenService>();
 
             services.AddControllers();
 
