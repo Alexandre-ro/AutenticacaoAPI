@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using Microsoft.AspNetCore.Mvc;
+using UsuarioAPI.Data.Request;
 using UsuarioAPI.DTO;
 using UsuarioAPI.Service;
 
@@ -9,11 +10,11 @@ namespace UsuarioAPI.Controllers
     [Route("[controller]")]
     public class UsuarioController : ControllerBase
     {
-        private UsuarioService _service;
+        private UsuarioService _service;     
 
         public UsuarioController(UsuarioService service)
         {
-            _service = service;
+            _service = service;            
         }
 
         [HttpPost]
@@ -27,6 +28,18 @@ namespace UsuarioAPI.Controllers
             }
 
             return Ok(resultado.Successes[0]);
+        }
+
+        [HttpGet("/ativar")]
+        public IActionResult AtivarConta([FromQuery]AtivaContaRequest ativaContaRequest) 
+        {
+            Result resultado = _service.AtivarConta(ativaContaRequest);
+
+            if (resultado.IsFailed) 
+            {
+                return StatusCode(500);
+            }
+            return Ok(resultado.Successes);
         }
     }
 }
