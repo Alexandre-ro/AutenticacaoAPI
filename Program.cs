@@ -21,6 +21,14 @@ namespace UsuarioAPI
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+            .ConfigureAppConfiguration((ctx, builder) =>
+            {
+                // enable secrets in development
+                if (ctx.HostingEnvironment.IsDevelopment())
+                {
+                    builder.AddUserSecrets<Program>();
+                }
+            });
     }
 }
