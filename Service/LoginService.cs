@@ -16,7 +16,7 @@ namespace UsuarioAPI.Service
             _sign = sign;
             _tokenService = tokenService;
         }
-        
+
         public Result LogarUsuario(LoginRequest request)
         {
             var resultLogin = _sign.PasswordSignInAsync(request.UserName, request.Password, false, false);
@@ -33,6 +33,43 @@ namespace UsuarioAPI.Service
             }
 
             return Result.Fail("Ocorreu uma falha ao realizar o Login!");
+        }
+
+        public Result SolicitarResetSenha(SolicitaResetRequest request)
+        {
+            IdentityUser<int> identityUser = _sign
+                                            .UserManager
+                                            .Users
+                                            .FirstOrDefault(u => u.NormalizedEmail == request.Email.ToUpper());
+
+            if (identityUser != null)
+            {
+                string codigoAtivacao = _sign.UserManager.GeneratePasswordResetTokenAsync(identityUser).Result;
+
+                return Result.Ok().WithSuccess(codigoAtivacao);
+            }
+
+            return Result.Fail("Ocorreu uma falha ao gerar o Código de Atiavação!");
+        }
+
+        public Result EfetuarTrocaSenha(EfetuarResetSenhaRequest request) 
+        {
+            IdentityUser<int> identityUser = _sign
+                                            .UserManager
+                                            .Users
+                                            .FirstOrDefault(u => u.NormalizedEmail == request.Email.ToUpper());
+
+            IdentityResult resultadoIdentity = _sign
+                                               .UserManager
+                                               .ResetPasswordAsync(identityUser, request.Token, request.Password)
+                                               .Result;
+
+            if (resultadoIdentity.Succeeded) 
+            {
+                return Result.Ok().WithSuccess("A Senha foi redefinada com sucesso!");
+            }
+
+            return Result.Fail("Ocorreu uma falha ao realizar a troca da Senha");
         }
     }
 }
